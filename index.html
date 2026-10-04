@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chá do Leonardo 👶🩵</title>
+  
+  <!-- Fontes do Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at top left, #e0f2fe 0%, #f0fdf4 40%, #f8fafc 100%);
+      color: #334155;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px -15px rgba(2, 132, 199, 0.12), 0 0 15px rgba(0, 0, 0, 0.02);
+      max-width: 460px;
+      width: 100%;
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .header-image-container {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.12);
+      background-color: #e0f2fe;
+    }
+
+    .header-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      color: #0284c7;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    h1 {
+      font-family: 'Comfortaa', cursive;
+      font-size: 2.1rem;
+      color: #0c4a6e;
+      margin-bottom: 22px;
+      line-height: 1.2;
+    }
+
+    .info-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 24px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      font-size: 0.92rem;
+      color: #475569;
+      gap: 12px;
+    }
+
+    .icon-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: #e0f2fe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .info-text strong {
+      color: #0f172a;
+    }
+
+    .map-container {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 2px 0;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 180px;
+      border: 0;
+      display: block;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: #1e293b;
+      background-color: #ffffff;
+      transition: all 0.25s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #0284c7;
+      box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.12);
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+      color: #ffffff;
+      font-family: 'Comfortaa', cursive;
+      font-weight: 700;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 1.05rem;
+      margin-top: 6px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 18px rgba(2, 132, 199, 0.28);
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(2, 132, 199, 0.38);
+    }
+
+    button:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Pop-up Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      padding: 32px 26px;
+      border-radius: 26px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: scale(0.88);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-icon {
+      font-size: 3.2rem;
+      margin-bottom: 10px;
+    }
+
+    .modal-title {
+      font-family: 'Comfortaa', cursive;
+      font-size: 1.45rem;
+      color: #0284c7;
+      margin-bottom: 10px;
+    }
+
+    .diaper-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      color: #0369a1;
+      font-family: 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 1.35rem;
+      padding: 12px 22px;
+      border-radius: 16px;
+      margin: 16px 0;
+      border: 2px dashed #0284c7;
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.1);
+    }
+
+    .btn-wsp {
+      width: 100%;
+      background: #25D366;
+      color: #ffffff;
+      font-family: 'Comfortaa', cursive;
+      font-weight: 700;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-wsp:hover {
+      background: #1eb956;
+      transform: translateY(-2px);
+    }
+
+    .btn-close {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    #containerQtdCriancas {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Imagem do Banner -->
+    <div class="header-image-container">
+      <img src="banner-leonardo.jpg" alt="Chá de Bebê Leonardo" class="header-image">
+    </div>
+
+    <div class="subtitle">Você está convidado!</div>
+    <h1>Chá do Leonardo 👶🩵</h1>
+    
+    <!-- Caixa de Informações -->
+    <div class="info-box">
+      <div class="info-item">
+        <div class="icon-badge">📅</div>
+        <div class="info-text">
+          <strong>Data & Hora:</strong><br>
+          07 de Novembro de 2026 às 16:00
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="icon-badge">📍</div>
+        <div class="info-text">
+          <strong>Local:</strong><br>
+          Quadra 4, salão de festas - Condomínio Jardim dos Tinguis (Jardins Mangueiral)
+        </div>
+      </div>
+
+      <!-- Mapa do Google Maps -->
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3837.342014350473!2d-47.81584137486785!3d-15.891143184762852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a2128b112163d%3A0xef3566e3cd166bd5!2sCondom%C3%ADnio%20Jardim%20dos%20Tinguis!5e0!3m2!1spt-BR!2sbr!4v1791078172716!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+
+      <div class="info-item">
+        <div class="icon-badge">🎁</div>
+        <div class="info-text">
+          <strong>Sugestão de Presente:</strong><br>
+          Fralda (tamanho sorteado) + Mimo
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulário de Confirmação -->
+    <form id="rsvpForm">
+      <div class="form-group">
+        <label for="nome">Seu Nome Completo *</label>
+        <input type="text" id="nome" required placeholder="Ex: Maria Silva">
+      </div>
+
+      <div class="form-group">
+        <label for="acompanhantes">Acompanhantes Adultos</label>
+        <select id="acompanhantes">
+          <option value="0">Vou sozinho(a)</option>
+          <option value="1">+1 acompanhante</option>
+          <option value="2">+2 acompanhantes</option>
+          <option value="3">+3 acompanhantes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="temCriancas">Levará crianças?</label>
+        <select id="temCriancas">
+          <option value="Não">Não</option>
+          <option value="Sim">Sim</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="containerQtdCriancas">
+        <label for="qtdCriancas">Quantas crianças?</label>
+        <input type="number" id="qtdCriancas" min="1" max="10" value="1" placeholder="Ex: 1">
+      </div>
+
+      <div class="form-group">
+        <label for="mensagem">Recadinho para o Leonardo (opcional)</label>
+        <textarea id="mensagem" rows="3" placeholder="Deixe um carinho para o bebê..."></textarea>
+      </div>
+
+      <button type="submit" id="btnSubmit">Confirmar Presença</button>
+    </form>
+  </div>
+
+  <!-- Pop-up (Modal) de Confirmação -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <div class="modal-icon">🎁🩵</div>
+      <h2 class="modal-title">Presença Confirmada!</h2>
+      <p style="font-size: 0.92rem; color: #475569; line-height: 1.5;">
+        Ficamos muito felizes! O tamanho da fralda sorteado para você foi:
+      </p>
+      
+      <div class="diaper-badge" id="modalFralda">Fralda Tam. M</div>
+      
+      <p style="font-size: 0.85rem; color: #64748b;">Clique abaixo para salvar o comprovante e enviar no WhatsApp:</p>
+      
+      <!-- Botão para enviar WhatsApp -->
+      <button class="btn-wsp" id="btnWhatsapp">
+        💬 Enviar Confirmação no WhatsApp
+      </button>
+
+      <button class="btn-close" onclick="fecharModal()">Fechar janela</button>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQzdvG62XVwBAJa78VlNT8cSdfyux_v1SaFCxVpMkQ0yxTCS3_e1kqTO09VtsnWEvG/exec';
+    
+    // ⚠️ COLOQUE AQUI O SEU NÚMERO DO WHATSAPP COM DDD (Exemplo: 55 + DDD + Número)
+    const SEU_NUMERO_WHATSAPP = '5561999999999'; 
+
+    let dadosConfirmados = {};
+
+    // Exibir/Ocultar quantidade de crianças
+    document.getElementById('temCriancas').addEventListener('change', function() {
+      const container = document.getElementById('containerQtdCriancas');
+      container.style.display = this.value === 'Sim' ? 'block' : 'none';
+    });
+
+    // Sorteio proporcional de fralda (20% P, 40% M, 20% G, 20% GG)
+    function sortearTamanhoFralda() {
+      const rand = Math.random() * 100;
+      if (rand < 20) return 'P';
+      if (rand < 60) return 'M';
+      if (rand < 80) return 'G';
+      return 'GG';
+    }
+
+    document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.innerText = 'Enviando...';
+
+      const nome = document.getElementById('nome').value;
+      const acompanhantes = document.getElementById('acompanhantes').value;
+      const temCriancas = document.getElementById('temCriancas').value;
+      const qtdCriancas = temCriancas === 'Sim' ? document.getElementById('qtdCriancas').value : '0';
+      const tamanhoFralda = sortearTamanhoFralda();
+
+      dadosConfirmados = {
+        nome: nome,
+        fralda: `Tam. ${tamanhoFralda}`
+      };
+
+      const payload = {
+        nome: nome,
+        acompanhantes: acompanhantes,
+        criancas: temCriancas === 'Sim' ? `${qtdCriancas} criança(s)` : 'Nenhuma',
+        fralda: `Tam. ${tamanhoFralda}`,
+        mensagem: document.getElementById('mensagem').value
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+
+        // Configura e exibe o modal
+        document.getElementById('modalFralda').innerText = `Fralda Tam. ${tamanhoFralda}`;
+        document.getElementById('modalOverlay').classList.add('active');
+        document.getElementById('rsvpForm').reset();
+        document.getElementById('containerQtdCriancas').style.display = 'none';
+
+      } catch (error) {
+        alert('Ops! Houve um erro ao enviar. Tente novamente.');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Confirmar Presença';
+      }
+    });
+
+    // Abrir WhatsApp com a mensagem pronta
+    document.getElementById('btnWhatsapp').addEventListener('click', function() {
+      const textoMensagem = `Olá! Confirmei minha presença no Chá do Leonardo! 👶🩵\n\n` +
+        `👤 *Nome:* ${dadosConfirmados.nome}\n` +
+        `🎁 *Fralda Sorteada:* ${dadosConfirmados.fralda}\n` +
+        `📅 *Data:* 07/11/2026 às 16:00\n` +
+        `📍 *Local:* Quadra 4, salão de festas - Condomínio Jardim dos Tinguis (Jardins Mangueiral)`;
+
+      const urlWhatsapp = `https://wa.me/${5561983122921}?text=${encodeURIComponent(textoMensagem)}`;
+      window.open(urlWhatsapp, '_blank');
+    });
+
+    function fecharModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
